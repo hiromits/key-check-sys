@@ -1,0 +1,1059 @@
+/* 一流デザイナー品質 CSS */
+:root {
+  /* カラーパレット - Apple/Google品質 */
+  --bg-primary: #FAFAFA;
+  --surface: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B7280;
+  --accent-blue: #007AFF;
+  --success-green: #34C759;
+  --warning-orange: #FF9500;
+  
+  /* シャドウ - 立体感演出 */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-press: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-success: 0 6px 30px rgba(52, 199, 89, 0.3);
+  
+  /* スペーシング - 8px base system */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  
+  /* レディウス */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+}
+
+/* リセット & 基本設定 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #FAFAFA 0%, #F8FAFC 50%, #F1F5F9 100%);
+  z-index: -2;
+  animation: gradientFloat 20s ease-in-out infinite;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.02'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zM10 30c0-11.046 8.954-20 20-20s20 8.954 20 20-8.954 20-20 20-20-8.954-20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index: -1;
+  opacity: 0.3;
+  animation: patternMove 30s linear infinite;
+}
+
+@keyframes gradientFloat {
+  0%, 100% {
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, #FAFAFA 0%, #F8FAFC 50%, #F1F5F9 100%);
+  }
+  25% {
+    background: 
+      radial-gradient(circle at 30% 70%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(120, 219, 255, 0.15) 0%, transparent 50%),
+      linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #E2E8F0 100%);
+  }
+  50% {
+    background: 
+      radial-gradient(circle at 40% 60%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 60% 40%, rgba(255, 119, 198, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 60% 60%, rgba(120, 219, 255, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 50%, #F8FAFC 100%);
+  }
+  75% {
+    background: 
+      radial-gradient(circle at 50% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+      linear-gradient(135deg, #E2E8F0 0%, #FAFAFA 50%, #F8FAFC 100%);
+  }
+}
+
+@keyframes patternMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+/* メインレイアウト */
+.main-container {
+  max-width: 400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+  padding-bottom: 0;
+}
+
+.content-area {
+  flex: 1;
+  padding-bottom: 100px; /* ナビゲーションの高さ分のマージン */
+}
+
+/* 日付表示 - 存在感のある美しいタイポグラフィ */
+.date-display {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  margin: var(--space-lg) 0;
+}
+
+/* メインコンテンツエリア */
+.main-content {
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+/* 鍵ボタン - 魅力的で触りたくなるデザイン */
+.lock-button {
+  border: none;
+  border-radius: 24px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  cursor: pointer;
+  transition: all 400ms cubic-bezier(0.23, 1, 0.320, 1);
+  font-family: inherit;
+  margin-bottom: var(--space-md);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.lock-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 600ms ease;
+}
+
+.lock-button:hover::before {
+  left: 100%;
+}
+
+.lock-button:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+
+.lock-button:active {
+  transform: scale(0.95) translateY(-3px);
+  transition: all 150ms ease;
+}
+
+/* 未ロック状態 - 触りたくなるグレー */
+.lock-button.unlocked {
+  background: linear-gradient(135deg, #E5E7EB 0%, #F3F4F6 50%, #E5E7EB 100%);
+  background-size: 200% 200%;
+  animation: shimmer 3s ease infinite;
+  color: #6B7280;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.lock-button.unlocked::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #D1D5DB, #F9FAFB, #D1D5DB);
+  border-radius: 26px;
+  z-index: -1;
+  animation: borderShimmer 4s ease infinite;
+}
+
+.lock-button.unlocked:hover {
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  animation: pulse 1.5s ease infinite;
+}
+
+/* ロック状態 - 達成感のあるブルー */
+.lock-button.locked {
+  background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 50%, #4FACFE 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+  color: white;
+  box-shadow: 
+    0 15px 45px rgba(79, 172, 254, 0.4),
+    0 6px 18px rgba(0, 242, 254, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.lock-button.locked::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+/* アニメーション */
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes borderShimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translateY(-6px) scale(1.03); }
+  50% { transform: translateY(-8px) scale(1.05); }
+}
+
+/* 鍵アニメーション */
+.lock-button.locking {
+  animation: lockSuccess 800ms ease-out;
+}
+
+@keyframes lockSuccess {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.05) rotate(1deg); }
+  40% { transform: scale(1.1) rotate(-1deg); }
+  60% { transform: scale(1.05) rotate(0.5deg); }
+  80% { transform: scale(1.02) rotate(-0.5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* 鍵ラベル - エレガントなタイポグラフィ */
+.lock-label {
+  font-size: 20px;
+  font-weight: 600;
+  flex: 1;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 鍵アイコン - 魅力的なアニメーション */
+.lock-icon {
+  font-size: 36px;
+  transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: center;
+  margin-left: var(--space-sm);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  position: relative;
+}
+
+.lock-icon.switching {
+  animation: keyTurn 600ms ease-out;
+}
+
+.lock-button:hover .lock-icon {
+  transform: scale(1.1);
+  animation: iconFloat 2s ease-in-out infinite;
+}
+
+.lock-button.unlocked:hover .lock-icon {
+  animation: iconPulse 1s ease-in-out infinite;
+}
+
+/* 鍵アニメーション */
+@keyframes keyTurn {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-15deg) scale(1.1); }
+  50% { transform: rotate(15deg) scale(1.2); }
+  75% { transform: rotate(-5deg) scale(1.1); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: scale(1.1) translateY(0); }
+  50% { transform: scale(1.15) translateY(-3px); }
+}
+
+@keyframes iconPulse {
+  0%, 100% { 
+    transform: scale(1.1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  }
+  50% { 
+    transform: scale(1.2);
+    filter: drop-shadow(0 4px 8px rgba(107, 114, 128, 0.4));
+  }
+}
+
+/* ロック成功時のスパークル効果 */
+.lock-button.locked .lock-icon::after {
+  content: '✨';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 16px;
+  animation: sparkle 2s ease-in-out infinite;
+  opacity: 0;
+}
+
+.lock-button.locked:hover .lock-icon::after {
+  opacity: 1;
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+/* 完了ボタン - 魔法のような特別演出 */
+.complete-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+  background-size: 200% 200%;
+  animation: magicGradient 4s ease infinite;
+  border: none;
+  border-radius: 28px;
+  height: 64px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 
+    0 15px 45px rgba(102, 126, 234, 0.4),
+    0 5px 15px rgba(118, 75, 162, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 400ms cubic-bezier(0.23, 1, 0.320, 1);
+  margin: var(--space-lg) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.complete-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transition: left 800ms ease;
+}
+
+.complete-button:hover::before {
+  left: 100%;
+}
+
+.complete-button:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 
+    0 25px 60px rgba(102, 126, 234, 0.5),
+    0 10px 25px rgba(118, 75, 162, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.complete-button:active {
+  transform: scale(0.95) translateY(-3px);
+  transition: all 150ms ease;
+}
+
+.complete-button.celebrating {
+  animation: celebrate 800ms ease-out, sparkleEffect 1.2s ease-out;
+}
+
+@keyframes magicGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes celebrate {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1) rotate(2deg); }
+  50% { transform: scale(1.15) rotate(-1deg); }
+  75% { transform: scale(1.05) rotate(1deg); }
+  100% { transform: scale(1); }
+}
+
+@keyframes sparkleEffect {
+  0%, 100% { 
+    box-shadow: 
+      0 15px 45px rgba(102, 126, 234, 0.4),
+      0 5px 15px rgba(118, 75, 162, 0.3); 
+  }
+  50% { 
+    box-shadow: 
+      0 25px 80px rgba(255, 215, 0, 0.6),
+      0 10px 30px rgba(255, 255, 255, 0.5),
+      0 0 20px rgba(255, 215, 0, 0.8); 
+  }
+}
+
+/* ナビゲーション - Apple風洗練されたタブバー */
+.bottom-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px 28px 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  background: rgba(118, 118, 128, 0.12);
+  border-radius: 28px;
+  padding: 4px;
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 24px;
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-width: 64px;
+  min-height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  gap: 2px;
+}
+
+.nav-button svg {
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  stroke-width: 2;
+}
+
+.nav-button:hover svg {
+  transform: scale(1.1);
+  stroke-width: 2.5;
+}
+
+.nav-button.active svg {
+  stroke-width: 2.5;
+  transform: scale(1.05);
+}
+
+.nav-button .nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  opacity: 0.8;
+}
+
+.nav-button:active {
+  transform: scale(0.95);
+}
+
+.nav-button.active {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.nav-button.active .nav-label {
+  opacity: 1;
+}
+
+/* 選択インジケーター - iOS風 */
+.nav-indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 64px;
+  height: 48px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+  transition: transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 1;
+}
+
+.nav-indicator.calendar {
+  transform: translateX(0px);
+}
+
+.nav-indicator.main {
+  transform: translateX(68px);
+}
+
+.nav-indicator.settings {
+  transform: translateX(136px);
+}
+
+/* メインビュー */
+.main-content {
+  display: none;
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+  transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.main-content.active {
+  display: flex;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: slideIn 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* カレンダー表示 */
+.calendar-view {
+  display: none;
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+  transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.calendar-view.active {
+  display: block;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: slideIn 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: var(--space-md);
+}
+
+.month-nav {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--accent-blue);
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all 200ms ease;
+}
+
+.month-nav:hover {
+  background: rgba(0, 122, 255, 0.1);
+}
+
+.current-month {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: var(--space-lg);
+}
+
+.calendar-cell {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 200ms ease;
+  cursor: pointer;
+  position: relative;
+  min-height: 40px;
+}
+
+.calendar-cell.header {
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: default;
+}
+
+.calendar-cell.completed {
+  background: var(--success-green);
+  color: white;
+  font-weight: 600;
+}
+
+.calendar-cell.incomplete {
+  background: var(--warning-orange);
+  color: white;
+}
+
+.calendar-cell.today {
+  border: 2px solid var(--accent-blue);
+  font-weight: 700;
+}
+
+.calendar-cell.other-month {
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+.calendar-cell:hover:not(.header) {
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+/* 設定画面 */
+.settings-view {
+  display: none;
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+  transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.settings-view.active {
+  display: block;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: slideIn 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.settings-section {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.settings-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--text-primary);
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+/* テーマスイッチ */
+.theme-switch {
+  display: flex;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 2px;
+}
+
+.theme-option {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.theme-option.active {
+  background: var(--accent-blue);
+  color: white;
+}
+
+/* 危険ボタン - モダンで控えめなデザイン */
+.danger-button {
+  background: rgba(255, 59, 48, 0.08);
+  border: none;
+  color: #FF3B30;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  font-family: inherit;
+  width: auto;
+  margin-left: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.danger-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 400ms ease;
+}
+
+.danger-button:hover::before {
+  left: 100%;
+}
+
+.danger-button:hover {
+  background: rgba(255, 59, 48, 0.12);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.15);
+}
+
+.danger-button:active {
+  transform: scale(0.96) translateY(0);
+  background: rgba(255, 59, 48, 0.16);
+}
+
+/* ポイントシステム */
+.points-display {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 100;
+}
+
+.points-animation {
+  position: fixed;
+  font-size: 24px;
+  font-weight: bold;
+  color: #FFD700;
+  z-index: 1000;
+  pointer-events: none;
+  animation: pointsFloat 2s ease-out forwards;
+}
+
+@keyframes pointsFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(1.5);
+  }
+}
+
+/* ストリーク表示 */
+.streak-display {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 16px;
+  margin: 16px 0;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+}
+
+.streak-number {
+  font-size: 28px;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.streak-text {
+  font-size: 12px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ダークテーマ */
+[data-theme="dark"] {
+  --bg-primary: #1C1C1E;
+  --surface: #2C2C2E;
+  --text-primary: #FFFFFF;
+  --text-secondary: #8E8E93;
+}
+
+[data-theme="dark"] body::before {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(80, 79, 148, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(155, 79, 148, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(80, 169, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 50%, #1F1F23 100%);
+  animation: darkGradientFloat 25s ease-in-out infinite;
+}
+
+[data-theme="dark"] body::after {
+  background: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.02'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zM10 30c0-11.046 8.954-20 20-20s20 8.954 20 20-8.954 20-20 20-20-8.954-20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.2;
+}
+
+@keyframes darkGradientFloat {
+  0%, 100% {
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(80, 79, 148, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(155, 79, 148, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(80, 169, 255, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 50%, #1F1F23 100%);
+  }
+  33% {
+    background: 
+      radial-gradient(circle at 30% 70%, rgba(80, 79, 148, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(155, 79, 148, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(80, 169, 255, 0.15) 0%, transparent 50%),
+      linear-gradient(135deg, #2C2C2E 0%, #1F1F23 50%, #252529 100%);
+  }
+  66% {
+    background: 
+      radial-gradient(circle at 60% 40%, rgba(80, 79, 148, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 60%, rgba(155, 79, 148, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(80, 169, 255, 0.2) 0%, transparent 50%),
+      linear-gradient(135deg, #1F1F23 0%, #252529 50%, #1C1C1E 100%);
+  }
+}
+
+[data-theme="dark"] .bottom-nav {
+  background: rgba(28, 28, 30, 0.95);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .nav-container {
+  background: rgba(118, 118, 128, 0.24);
+}
+
+[data-theme="dark"] .nav-indicator {
+  background: rgba(44, 44, 46, 0.9);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 375px) {
+  .main-container {
+    padding: var(--space-sm);
+  }
+  
+  .date-display {
+    font-size: 28px;
+  }
+  
+  .lock-button {
+    height: 72px;
+  }
+}
+
+@media (max-height: 667px) {
+  .main-container {
+    grid-template-rows: auto 1fr 60px;
+  }
+  
+  .date-display {
+    margin: var(--space-md) 0;
+  }
+}
+
+/* アクセシビリティ */
+.lock-button:focus-visible {
+  outline: 3px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* パーティクルアニメーション */
+@keyframes particleFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(1.5) rotate(360deg);
+  }
+}
+
+/* タッチ最適化 */
+@media (hover: none) and (pointer: coarse) {
+  .lock-button:hover {
+    transform: none;
+  }
+  
+  .lock-button.unlocked:hover {
+    animation: none;
+  }
+  
+  .nav-button:hover {
+    background: none;
+  }
+}
+
+/* ローディング状態 */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* モーダル */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 300ms ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin: var(--space-md);
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  transition: all 300ms ease;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all 200ms ease;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.1);
+}
